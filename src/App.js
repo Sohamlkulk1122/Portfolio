@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 const App = () => {
   const [activeSection, setActiveSection] = useState('home');
@@ -7,15 +7,17 @@ const App = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [textIndex, setTextIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
-  const [typingSpeed, setTypingSpeed] = useState(100);
+  // Removed setTypingSpeed as it was unused, using typingSpeed directly
+  const typingSpeed = 100;
 
-  const roles = [
+  // Memoize the roles array to prevent it from causing useEffect dependency issues
+  const roles = useMemo(() => [
     "Soham Kulkarni",
     "Front-End Developer",
     "Data Analyst",
     "Prompt Engineer",
     "Ethical Hacking Expert"
-  ];
+  ], []); // Empty dependency array means this array is created only once
 
   useEffect(() => {
     let ticker;
@@ -300,7 +302,6 @@ const App = () => {
   );
 };
 
-// NavItem Component for reusability
 const NavItem = ({ id, active, onClick, children }) => (
   <a
     href={`#${id}`}
@@ -314,7 +315,6 @@ const NavItem = ({ id, active, onClick, children }) => (
   </a>
 );
 
-// Skill Card Component
 const SkillCard = ({ icon, title, skills }) => (
   <div className="bg-gray-800 rounded-xl p-6 shadow-lg transform hover:scale-105 transition-transform duration-300 border border-gray-700">
     <div className="text-5xl mb-4">{icon}</div>
@@ -332,7 +332,6 @@ const SkillCard = ({ icon, title, skills }) => (
   </div>
 );
 
-// Experience Card Component
 const ExperienceCard = ({ company, role, date, description }) => (
   <div className="bg-gray-900 rounded-xl p-8 shadow-xl border border-gray-700">
     <h3 className="text-3xl font-bold text-indigo-400 mb-2">{company}</h3>
@@ -351,7 +350,6 @@ const ExperienceCard = ({ company, role, date, description }) => (
   </div>
 );
 
-// Project Card Component
 const ProjectCard = ({ project }) => (
   <div className="bg-gray-800 rounded-xl overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 border border-gray-700">
     <img
@@ -400,4 +398,5 @@ const ProjectCard = ({ project }) => (
     </div>
   </div>
 );
+
 export default App;
